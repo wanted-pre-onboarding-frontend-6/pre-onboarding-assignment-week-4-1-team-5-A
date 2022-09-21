@@ -9,7 +9,6 @@ interface RotuerPathType {
 
 const routes = (): Array<RotuerPathType> => [
   {
-    layout: false,
     children: [
       {
         path: '/',
