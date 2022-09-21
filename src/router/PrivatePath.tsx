@@ -1,3 +1,4 @@
+import { ReactNode } from 'react';
 import FullLayout from 'components/layout/FullLayout';
 import AccountInfoPage from 'pages/accointInfo';
 import AccountListPage from 'pages/accountList';
@@ -7,7 +8,7 @@ import { RouteObject } from 'react-router';
 
 interface RotuerPathType {
   key?: string;
-  layout?: React.ReactNode;
+  layout?: ReactNode;
   children?: RouteObject[];
 }
 

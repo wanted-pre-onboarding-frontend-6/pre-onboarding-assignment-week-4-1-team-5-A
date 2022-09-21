@@ -1,14 +1,15 @@
-import FullLayout from 'components/layout/FullLayout';
+import { ReactNode } from 'react';
 import LoginPage from 'pages/login';
 import { RouteObject } from 'react-router';
 
 interface RotuerPathType {
-  layout?: React.ReactNode;
+  layout?: ReactNode;
   children?: RouteObject[];
 }
 
 const routes = (): Array<RotuerPathType> => [
   {
+    layout: false,
     children: [
       {
         path: '/',
