@@ -10,8 +10,7 @@ export const size = {
   desktopL: 1920,
 };
 
-const { mobileS, mobileM, mobileL, tablet, desktopS, desktopM, desktopL } =
-  size;
+const { mobileS, mobileM, mobileL, tablet, desktopS, desktopM, desktopL } = size;
 
 export const media = {
   mobileS: mediaQuery(mobileS),

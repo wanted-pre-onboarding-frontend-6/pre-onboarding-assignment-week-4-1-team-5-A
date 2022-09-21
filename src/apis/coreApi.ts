@@ -1,4 +1,4 @@
-import axios, { AxiosInstance, AxiosRequestHeaders } from "axios";
+import axios, { AxiosInstance, AxiosRequestHeaders } from 'axios';
 
 class Http {
   baseURL: string | undefined;
@@ -10,8 +10,8 @@ class Http {
     this.axios = axios.create({
       baseURL: `${baseURL}`,
       headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
       },
     });
     if (token) {
@@ -35,43 +35,27 @@ class Http {
       (error: any) => {
         console.error(error);
         throw new Error(error);
-      }
+      },
     );
   }
 
   /* method */
-  protected async get(
-    url: string,
-    formData: any,
-    headerOption?: AxiosRequestHeaders | undefined
-  ) {
+  protected async get(url: string, formData: any, headerOption?: AxiosRequestHeaders | undefined) {
     this.axiosInstance(headerOption);
     return await this.axios.get(url, { params: formData });
   }
 
-  protected async post(
-    url: string,
-    data: any,
-    headerOption?: AxiosRequestHeaders | undefined
-  ) {
+  protected async post(url: string, data: any, headerOption?: AxiosRequestHeaders | undefined) {
     this.axiosInstance(headerOption);
     return await this.axios.post(url, data);
   }
 
-  protected async put(
-    url: string,
-    data: any,
-    headerOption?: AxiosRequestHeaders | undefined
-  ) {
+  protected async put(url: string, data: any, headerOption?: AxiosRequestHeaders | undefined) {
     this.axiosInstance(headerOption);
     return await this.axios.put(url, data);
   }
 
-  protected async delete(
-    url: string,
-    data: any,
-    headerOption?: AxiosRequestHeaders | undefined
-  ) {
+  protected async delete(url: string, data: any, headerOption?: AxiosRequestHeaders | undefined) {
     this.axiosInstance(headerOption);
     return await this.axios.delete(url, { data });
   }

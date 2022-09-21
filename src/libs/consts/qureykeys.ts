@@ -1,1 +1,1 @@
-export const qureykeys = "";
+export const qureykeys = '';

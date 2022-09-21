@@ -1,34 +1,35 @@
-import { BrowserRouter, Route, Routes } from "react-router-dom";
-import routes from "./Path";
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import PublicRoutes from './PrivatePath';
+import PraviateRoutes from './PublicPath';
+import PrivateRoute from './PrivateRoute';
 
 const Routing = () => {
-  const routing = routes();
+  const privateRoutes = PraviateRoutes();
+  const publicRoutes = PublicRoutes();
+
   return (
     <BrowserRouter>
       <Routes>
-        {routing.map(({ auth, element, children }, index) => {
-          return auth ? (
-            <Route element={element} key={index}>
-              {children?.map(({ element, children }, index) => {
-                return (
-                  <Route element={element} key={index}>
-                    {children?.map(({ path, element }) => {
-                      return <Route path={path} element={element} key={path} />;
-                    })}
-                  </Route>
-                );
+        {/*private */}
+        {privateRoutes.map(({ layout, children }) => {
+          return (
+            <Route element={<PrivateRoute />} key="private">
+              <Route element={layout}>
+                {children?.map(({ path, element }) => {
+                  return <Route path={path} element={element} key={path} />;
+                })}
+              </Route>
+            </Route>
+          );
+        })}
+        {/*public */}
+        {publicRoutes.map(({ layout, children }) => {
+          return (
+            <Route element={layout && layout} key="public">
+              {children?.map(({ path, element }) => {
+                return <Route path={path} element={element} key={path} />;
               })}
             </Route>
-          ) : (
-            children?.map(({ element, children }, index) => {
-              return (
-                <Route element={element} key={index}>
-                  {children?.map(({ path, element }) => {
-                    return <Route path={path} element={element} key={path} />;
-                  })}
-                </Route>
-              );
-            })
           );
         })}
       </Routes>

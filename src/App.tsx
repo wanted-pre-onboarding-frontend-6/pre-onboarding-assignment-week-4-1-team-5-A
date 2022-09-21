@@ -1,6 +1,7 @@
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { RecoilRoot } from "recoil";
-import Routing from "router/Routing";
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import GlobalStyles from 'libs/styles/global';
+import { RecoilRoot } from 'recoil';
+import Routing from 'router/Routing';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -18,6 +19,7 @@ function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <RecoilRoot>
+        <GlobalStyles />
         <Routing />
       </RecoilRoot>
     </QueryClientProvider>
