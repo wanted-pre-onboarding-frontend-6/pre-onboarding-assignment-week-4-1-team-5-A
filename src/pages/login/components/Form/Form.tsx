@@ -22,7 +22,7 @@ const LoginForm = () => {
       const { accessToken } = response.data;
       TokenService.setToken({ key: process.env.REACT_APP_TOKEN_KEY as string, token: accessToken });
       if (TokenService.getToken(process.env.REACT_APP_TOKEN_KEY as string)) {
-        navigate('/account-list', { replace: true });
+        navigate('/accounts/account-list', { replace: true });
       }
     },
     onError: () => {

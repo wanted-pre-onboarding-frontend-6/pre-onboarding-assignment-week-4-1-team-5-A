@@ -17,19 +17,19 @@ const routes = (): Array<RotuerPathType> => [
     layout: <FullLayout />,
     children: [
       {
-        path: '/account-list/',
+        path: '/accounts/account-list/',
         element: <AccountListPage />,
       },
       {
-        path: '/account-list/:accountId',
+        path: '/accounts/account-list/:accountId',
         element: <AccountInfoPage />,
       },
       {
-        path: '/user-list',
+        path: '/users/user-list',
         element: <UserListPage />,
       },
       {
-        path: '/user-list/:userId',
+        path: '/users/user-list/:userId',
         element: <UserInfoPage />,
       },
     ],

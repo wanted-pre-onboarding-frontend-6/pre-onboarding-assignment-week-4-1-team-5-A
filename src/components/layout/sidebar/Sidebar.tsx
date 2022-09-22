@@ -1,11 +1,13 @@
-import styled from 'styled-components';
+import SideContent from './content/SideContent';
+import SideHeader from './header/SideHeader';
+import * as Styled from './Style';
 
 const LayoutSidebar = () => {
-  return <SidebarWrapper>:)</SidebarWrapper>;
+  return (
+    <Styled.Wrapper>
+      <SideHeader />
+      <SideContent />
+    </Styled.Wrapper>
+  );
 };
 export default LayoutSidebar;
-
-const SidebarWrapper = styled.div`
-  width: 500px;
-  background-color: blue;
-`;

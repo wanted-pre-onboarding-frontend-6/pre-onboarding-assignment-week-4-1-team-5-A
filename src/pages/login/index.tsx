@@ -1,18 +1,13 @@
-import styled from 'styled-components';
+import * as Styled from './Style';
 import LoginHeader from './components/header/Header';
 import LoginForm from './components/Form/Form';
 
 const LoginPage = () => {
   return (
-    <LoginPageWrapper>
+    <Styled.Wrapper>
       <LoginHeader />
       <LoginForm />
-    </LoginPageWrapper>
+    </Styled.Wrapper>
   );
 };
 export default LoginPage;
-
-const LoginPageWrapper = styled.div`
-  width: 100%;
-  height: 100vh;
-`;
