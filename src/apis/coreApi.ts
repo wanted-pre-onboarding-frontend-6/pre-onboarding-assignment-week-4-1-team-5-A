@@ -28,7 +28,7 @@ class Http {
         }
         config.headers = {
           ...headerOption,
-          Authorization: `Barear ${!this.token}`,
+          Authorization: `Barear ${this.token}`,
         };
         return config;
       },

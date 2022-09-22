@@ -1,6 +1,6 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import PublicRoutes from './Path/PrivatePath';
-import PraviateRoutes from './Path/PublicPath';
+import PublicRoutes from './path/PrivatePath';
+import PraviateRoutes from './path/PublicPath';
 import PrivateRoute from './PrivateRoute';
 
 const Routing = () => {
@@ -14,7 +14,7 @@ const Routing = () => {
         {privateRoutes.map(({ layout, children }) => {
           return (
             <Route element={<PrivateRoute />} key="private">
-              <Route element={layout}>
+              <Route element={layout && layout}>
                 {children?.map(({ path, element }) => {
                   return <Route path={path} element={element} key={path} />;
                 })}
