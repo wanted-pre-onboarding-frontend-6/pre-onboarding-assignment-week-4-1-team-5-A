@@ -7,6 +7,7 @@ class Http {
 
   /* constructor */
   constructor(baseURL: string | undefined, token?: string | undefined) {
+    this.baseURL = baseURL;
     this.axios = axios.create({
       baseURL: `${baseURL}`,
       headers: {
@@ -33,8 +34,7 @@ class Http {
         return config;
       },
       (error: any) => {
-        console.error(error);
-        throw new Error(error);
+        return Promise.reject(error);
       },
     );
   }

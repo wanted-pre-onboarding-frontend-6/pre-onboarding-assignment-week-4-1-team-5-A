@@ -1,7 +1,7 @@
 import { ReactNode } from 'react';
 import FullLayout from 'components/layout/FullLayout';
-import AccountInfoPage from 'pages/accointInfo';
 import AccountListPage from 'pages/accountList';
+import AccountInfoPage from 'pages/accountInfo';
 import UserInfoPage from 'pages/userInfo';
 import UserListPage from 'pages/userList';
 import { RouteObject } from 'react-router';

@@ -1,8 +1,9 @@
-import { Outlet } from 'react-router-dom';
+import { useRef } from 'react';
+import { Navigate, Outlet } from 'react-router-dom';
+import TokenService from 'services/TokenService';
 
 const PrivateRoute = () => {
-  // login auth : redirect "/"
-  // return <Outlet /> : <Navigate to="/" />;
-  return <Outlet />;
+  const auth = useRef(TokenService.getToken(process.env.REACT_APP_TOKEN_KEY as string));
+  return auth.current ? <Outlet /> : <Navigate to="/" />;
 };
 export default PrivateRoute;

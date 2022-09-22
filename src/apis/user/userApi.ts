@@ -1,4 +1,5 @@
 import Http from 'apis/coreApi';
+import TokenService from 'services/TokenService';
 
 interface ParamsType {
   params?: string | object;
@@ -6,12 +7,14 @@ interface ParamsType {
   userId?: number | undefined;
 }
 
-class UerApi {
+class UserApi {
   http: any;
   path: string;
+  token: string | null;
 
   constructor() {
-    this.http = new Http(process.env.REACT_APP_API_URL);
+    this.token = TokenService.getToken(process.env.REACT_APP_TOKEN_KEY as string);
+    this.http = new Http(process.env.REACT_APP_API_URL, this.token ? this.token : undefined);
     this.path = '/users';
   }
 
@@ -39,4 +42,4 @@ class UerApi {
     return this.http.get('/userSetting', params);
   }
 }
-export default new UerApi();
+export default new UserApi();

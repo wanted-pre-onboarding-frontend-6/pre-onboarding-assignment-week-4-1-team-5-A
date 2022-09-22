@@ -1,29 +1,19 @@
 import { Outlet } from 'react-router-dom';
-import styled from 'styled-components';
 import LayoutFooter from './footer/Footer';
 import LayoutHeader from './header/Header';
-import LayoutSidebar from './sidbar/Sdiebar';
+import LayoutSidebar from './sidebar/Sidebar';
+import * as Styled from './Style';
 
 const FullLayout = () => {
   return (
-    <FullLayoutWrapper>
+    <Styled.Wrapper>
       <LayoutSidebar />
-      <FullLayoutContainer>
+      <Styled.Container>
         <LayoutHeader />
         <Outlet />
         <LayoutFooter />
-      </FullLayoutContainer>
-    </FullLayoutWrapper>
+      </Styled.Container>
+    </Styled.Wrapper>
   );
 };
 export default FullLayout;
-
-const FullLayoutWrapper = styled.div`
-  display: flex;
-  background-color: red;
-  height: 100vh;
-`;
-
-const FullLayoutContainer = styled.div`
-  width: calc(100% - 500px);
-`;

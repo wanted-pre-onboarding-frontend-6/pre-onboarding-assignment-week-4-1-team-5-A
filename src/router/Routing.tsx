@@ -1,6 +1,6 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import PublicRoutes from './path/PrivatePath';
-import PraviateRoutes from './path/PublicPath';
+import PublicRoutes from './path/PublicPath';
+import PraviateRoutes from './path/PrivatePath';
 import PrivateRoute from './PrivateRoute';
 
 const Routing = () => {
