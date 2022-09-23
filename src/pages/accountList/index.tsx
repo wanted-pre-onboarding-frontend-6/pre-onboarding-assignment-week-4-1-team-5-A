@@ -1,6 +1,7 @@
 import useAccountList from 'queries/account/useAccountList';
 import Button from 'components/Button/Button';
 import { useNavigate } from 'react-router-dom';
+import PageNation from 'components/Pagenation/Pagenation';
 import { useEffect, useState } from 'react';
 // import ListTable from 'container/ListTable/Table';
 
@@ -14,46 +15,12 @@ interface filterProps {
 }
 
 const AccountListPage = () => {
-  const navigate = useNavigate();
-
   const [page, setPage] = useState(1);
-  const [limit, setLimit] = useState(10);
-  const [sort, setSort] = useState('desc');
-
-  const [accountList, setAccountList] = useState();
-
-  const initFilterState: filterProps = {
-    is_active: undefined,
-    accountstatus: undefined,
-    broker_id: undefined,
-    created_at: undefined,
-    limit: undefined,
-    order: undefined,
-  };
-
-  const [filter, setFilter] = useState(initFilterState);
+  const [totalPage, setTotalPage] = useState(0);
 
   useEffect(() => {
-    navigate(`?page=${page}&limit=${limit}`);
-  }, [page, limit]);
-
-  const { data, isLoading, isError } = useAccountList({
-    _page: page,
-    _limit: limit,
-    _sort: sort,
-  });
-
-  useEffect(() => {
-    setAccountList(data?.data);
-  }, [data]);
-
-  // console.log(data?.data);
-  // console.log('isLoading', isLoading);
-  // console.log('isError', isError);
-
-  // const changeListByfilter = (e: any) => {
-  //   setFilter({ ...filter, {e.target.name: e.target.value} });
-  // };
+    setTotalPage(10);
+  }, []);
 
   return (
     <div>
@@ -174,6 +141,7 @@ const AccountListPage = () => {
       </Button>
       <Button variant="primary-text" shape="default" size="full">
         확인
+<<<<<<< HEAD
       </Button> */}
     </div>
   );

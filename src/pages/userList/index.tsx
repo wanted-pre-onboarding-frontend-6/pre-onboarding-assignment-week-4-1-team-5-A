@@ -9,12 +9,7 @@ import accountApi from 'apis/account/accountApi';
 import axios from 'axios';
 
 const UserListPage = () => {
-  const userLists = useListUser({
-    _page: 1,
-    _limit: 10,
-    _sort: 'desc',
-  });
-  const { data } = useUserSetting({
+  const { data, isLoading, isError } = useListUser({
     _page: 1,
     _limit: 10,
     _sort: 'desc',
