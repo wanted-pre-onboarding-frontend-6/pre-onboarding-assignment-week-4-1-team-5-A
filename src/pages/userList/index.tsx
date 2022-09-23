@@ -6,6 +6,7 @@ import { UserList, UserSetting } from 'types/user';
 import useUserSetting from 'queries/user/useUserSetting';
 import ListTable from 'container/ListTable/Table';
 import accountApi from 'apis/account/accountApi';
+import axios from 'axios';
 
 const UserListPage = () => {
   const userLists = useListUser({
@@ -19,41 +20,41 @@ const UserListPage = () => {
     _sort: 'desc',
   });
 
-  const getAccountCount = async (id: number) => {
-    const res = await accountApi.getAccountbyId(`/?user_id=${id}`);
-    const array = res.data;
-    const count = array.length;
-    res &&
-      res.forEach((item: any) => {
-        item.name = id;
-        item.count = count;
-      });
-  };
+  // const getAccountCount = async (id: number) => {
+  //   const res = await axios.get(`/?user_id=${id}`);
+  //   const array = res.data;
+  //   const count = array.length;
+  //   res &&
+  //     res.forEach((item: any) => {
+  //       item.name = id;
+  //       item.count = count;
+  //     });
+  // };
 
-  console.log(getAccountCount(3));
+  console.log(data);
 
   const userSetting = data?.data;
   const [userList, setUserList] = useRecoilState<any>(userListAtom);
   const [userAll, setUserAll] = useRecoilState<any>(userAtom);
 
-  const mergeArrayObjects = (userList: UserList[], userSetting: UserSetting[]) => {
-    return (
-      userSetting &&
-      userSetting.map((item, i) => {
-        const data = getAccountCount(item.id);
-        if (item.uuid === userList[i]?.uuid ===) {
-          const newArray = Object.assign({}, item, userList[i]);
-          return newArray
-        }
-      })
-    );
-  };
+  // const mergeArrayObjects = (userList: UserList[], userSetting: UserSetting[]) => {
+  //   return (
+  //     userSetting &&
+  //     userSetting.map((item, i) => {
+  //       const data = getAccountCount(item.id);
+  //       if (item.uuid === userList[i]?.uuid ===) {
+  //         const newArray = Object.assign({}, item, userList[i]);
+  //         return newArray
+  //       }
+  //     })
+  //   );
+  // };
 
-  const userAllData = mergeArrayObjects(userList, userSetting);
+  // const userAllData = mergeArrayObjects(userList, userSetting);
 
-  useEffect(() => {
-    setUserList(userLists.data?.data);
-  }, [userLists, setUserAll]);
+  // useEffect(() => {
+  //   setUserList(userLists.data?.data);
+  // }, [userLists, setUserAll]);
 
   return (
     <div>
