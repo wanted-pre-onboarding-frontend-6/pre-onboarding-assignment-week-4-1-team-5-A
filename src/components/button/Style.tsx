@@ -59,6 +59,8 @@ const sizeCSS = {
   `,
 
   large: css`
+    width: 450px;
+    height: 64px;
     padding: 16px 0;
     font-size: ${({ theme }) => theme.fontSize.xlarge};
     font-weight: ${({ theme }) => theme.fontWeight.bold};

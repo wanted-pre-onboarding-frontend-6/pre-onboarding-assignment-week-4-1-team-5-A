@@ -13,8 +13,7 @@ class UserApi {
   token: string | null | undefined;
 
   constructor(token: string | null | undefined) {
-    this.token = token;
-    this.http = new Http(process.env.REACT_APP_API_URL, this.token ? this.token : undefined);
+    this.http = new Http(process.env.REACT_APP_API_URL, token ? token : undefined);
     this.path = '/users';
   }
 

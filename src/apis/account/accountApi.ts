@@ -10,11 +10,9 @@ interface ParamsType {
 class AccountApi {
   http: any;
   path: string;
-  token: any;
 
-  constructor() {
-    this.token = TokenService.getToken(process.env.REACT_APP_TOKEN_KEY as string);
-    this.http = new Http(process.env.REACT_APP_API_URL, this.token ? this.token : undefined);
+  constructor(token: string | null | undefined) {
+    this.http = new Http(process.env.REACT_APP_API_URL, token ? token : undefined);
     this.path = '/account';
   }
 
@@ -30,4 +28,4 @@ class AccountApi {
     return this.http.get(this.path, params);
   }
 }
-export default new AccountApi();
+export default new AccountApi(TokenService.getToken(process.env.REACT_APP_TOKEN_KEY as string));
