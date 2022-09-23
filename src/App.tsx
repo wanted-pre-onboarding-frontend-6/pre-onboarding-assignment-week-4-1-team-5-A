@@ -5,8 +5,8 @@ import theme from 'libs/styles/theme';
 import GlobalStyles from 'libs/styles/global';
 import { useEffect } from 'react';
 import { useRoutes } from 'react-router-dom';
-import { PRIVATE_PATH } from 'router/Path/PrivatePath';
-import { PUBLIC_PATH } from 'router/Path/PublicPath';
+import { PRIVATE_PATH } from 'router/path/PrivatePath';
+import { PUBLIC_PATH } from 'router/path/PublicPath';
 
 const queryClient = new QueryClient({
   defaultOptions: {

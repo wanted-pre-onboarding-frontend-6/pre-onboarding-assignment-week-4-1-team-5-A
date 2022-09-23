@@ -1,10 +1,5 @@
 import axios, { AxiosInstance, AxiosRequestHeaders } from 'axios';
 
-
-
-
-
-
 class Http {
   baseURL: string | undefined;
   token: string | undefined;

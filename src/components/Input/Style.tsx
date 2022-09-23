@@ -1,6 +1,3 @@
-<<<<<<< HEAD
-export const Styled = '';
-=======
 import { inputStyleProps } from 'libs/types/style/stylePros.type';
 import styled, { css } from 'styled-components';
 
@@ -29,4 +26,3 @@ export const TextArea = styled.textarea<inputStyleProps>`
 export const Input = styled.input<inputStyleProps>`
   width: 100%;
 `;
->>>>>>> 93e819f (feat: pagenation)
