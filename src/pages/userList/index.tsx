@@ -3,8 +3,9 @@ import useListUser from 'queries/user/useListUser';
 
 const UserListPage = () => {
   const { data, isLoading, isError } = useListUser({
-    page: 1,
-    limit: 10,
+    _page: 1,
+    _limit: 10,
+    _sort: 'desc',
   });
 
   console.log(data, isLoading, isError);

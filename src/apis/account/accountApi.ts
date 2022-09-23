@@ -13,7 +13,7 @@ class AccountApi {
 
   constructor(token: string | null | undefined) {
     this.http = new Http(process.env.REACT_APP_API_URL, token ? token : undefined);
-    this.path = '/account';
+    this.path = '/accounts';
   }
 
   public getList({ params }: ParamsType) {
