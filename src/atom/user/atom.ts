@@ -5,7 +5,7 @@ export const userListAtom = atom<any>({
   default: {},
 });
 
-export const userAton = atom<any>({
+export const userAtom = atom<any>({
   key: 'user',
   default: {},
 });

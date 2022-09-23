@@ -9,7 +9,7 @@ const useListUser = <TData = AxiosResponse<any>>(
 ): UseQueryResult<TData, AxiosError<any>> =>
   useQuery(
     [GET_USER_LIST, { _page, _limit, _sort, _state }],
-    () => UserApi.getList({ params: { _page, _limit, _sort, _state } }),
+    () => UserApi.getList({ params: { _page, _limit, _sort } }),
     {
       ...options,
       retry: false,
