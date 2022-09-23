@@ -10,10 +10,10 @@ interface ParamsType {
 class UserApi {
   http: any;
   path: string;
-  token: string | null;
+  token: string | null | undefined;
 
-  constructor() {
-    this.token = TokenService.getToken(process.env.REACT_APP_TOKEN_KEY as string);
+  constructor(token: string | null | undefined) {
+    this.token = token;
     this.http = new Http(process.env.REACT_APP_API_URL, this.token ? this.token : undefined);
     this.path = '/users';
   }
@@ -23,6 +23,7 @@ class UserApi {
   }
 
   public getList({ params }: ParamsType) {
+    console.log(params);
     return this.http.get(this.path, params);
   }
 
@@ -42,4 +43,4 @@ class UserApi {
     return this.http.get('/userSetting', params);
   }
 }
-export default new UserApi();
+export default new UserApi(TokenService.getToken(process.env.REACT_APP_TOKEN_KEY as string));

@@ -1,4 +1,4 @@
-import { ACCOUNT_TITLE, USER_TITLE } from 'libs/consts/table';
+import { ACCOUNT_TITLE, USER_TITLE } from 'libs/consts/tableTitle';
 
 export interface TableType {
   type: 'account' | 'user';

@@ -1,11 +1,11 @@
 import Button from 'components/Button/Button';
-import ListTable from 'container/ListTable/Table';
+// import ListTable from 'container/ListTable/Table';
 
 const AccountListPage = () => {
   return (
     <div>
       <h1>accountlist Page</h1>
-      <ListTable type="account" />
+      {/* <ListTable type="account" /> */}
 
       <Button variant="primary" shape="round" size="small">
         확인

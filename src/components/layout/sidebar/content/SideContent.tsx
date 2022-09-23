@@ -1,4 +1,5 @@
 import { useParamString } from 'hooks/useParamString';
+import { SIDE_MENU } from 'libs/consts/sideMenu';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import * as Styled from './Style';
@@ -9,23 +10,7 @@ const SideContent = () => {
   const navige = useNavigate();
 
   // sideList state
-  const [sideList, setSideList] = useState([
-    {
-      id: 1,
-      name: '계좌 관리',
-      keyword: 'accounts',
-      state: false,
-      children: [{ id: 1, name: '계좌 목록', keyword: 'account-list', state: false }],
-    },
-    {
-      id: 2,
-      name: '사용자 관리',
-      keyword: 'users',
-      state: false,
-      children: [{ id: 1, name: '사용자 목록', keyword: 'user-list', state: false }],
-    },
-    { id: 9999, name: '로그아웃', keyword: 'logout' },
-  ]);
+  const [sideList, setSideList] = useState(SIDE_MENU);
 
   // refresh selec sideList
   useEffect(() => {

@@ -1,19 +1,11 @@
 import { useParamString } from 'hooks/useParamString';
+import { SIDE_TITLE } from 'libs/consts/sideTitle';
 import { useEffect, useRef, useState } from 'react';
 import * as Styled from './Style';
 
 const LayoutHeader = () => {
   const { LIST_PATH } = useParamString();
-  const titleList = useRef([
-    {
-      keyword: 'account-list',
-      title: '계좌 목록',
-    },
-    {
-      keyword: 'user-list',
-      title: '사용자 목록',
-    },
-  ]);
+  const titleList = useRef(SIDE_TITLE);
 
   const [pathTitle, setPathTitle] = useState('Dashboard');
 

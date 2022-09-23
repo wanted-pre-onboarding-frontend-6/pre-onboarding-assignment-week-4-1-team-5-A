@@ -29,7 +29,7 @@ class Http {
         }
         config.headers = {
           ...headerOption,
-          Authorization: `Barear ${this.token}`,
+          Authorization: `Bearer ${this.token}`,
         };
         return config;
       },
