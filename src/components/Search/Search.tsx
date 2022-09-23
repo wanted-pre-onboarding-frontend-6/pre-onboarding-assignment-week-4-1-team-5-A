@@ -1,13 +1,13 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import styled from 'styled-components';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import * as Styled from './Style';
 
 library.add(faSearch);
 
-function SearchBar() {
+const Search = () => {
   const [searchValue, setSearchValue] = useState<string>('');
   const navigate = useNavigate();
 
@@ -18,7 +18,7 @@ function SearchBar() {
 
   return (
     <form onSubmit={searchValueHandler}>
-      <Input
+      <Styled.Input
         type="text"
         placeholder="검색어를 입력해주세요"
         value={searchValue}
@@ -27,11 +27,5 @@ function SearchBar() {
       <FontAwesomeIcon icon={['fas', 'search']} />
     </form>
   );
-}
-
-export default SearchBar;
-
-const Input = styled.input`
-  border: 1px solid;
-  border-radius: 10px;
-`;
+};
+export default Search;

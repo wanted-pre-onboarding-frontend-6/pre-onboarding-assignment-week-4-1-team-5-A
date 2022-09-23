@@ -1,5 +1,6 @@
-import { TableType } from './type';
-
+export interface TableType {
+  type: 'account' | 'user';
+}
 const user_array = [
   {
     id: 9,
@@ -37,7 +38,7 @@ const account_array = [
   },
 ];
 
-function Tbody({ type }: TableType) {
+const Tbody = ({ type }: TableType) => {
   return (
     <tbody>
       <tr>
@@ -76,5 +77,5 @@ function Tbody({ type }: TableType) {
       </tr>
     </tbody>
   );
-}
+};
 export default Tbody;

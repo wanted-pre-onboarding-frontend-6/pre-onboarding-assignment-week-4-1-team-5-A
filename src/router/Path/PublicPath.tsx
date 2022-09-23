@@ -1,20 +1,14 @@
-import { ReactNode } from 'react';
+import FullLayout from 'container/FullLayout/FullLayout';
 import LoginPage from 'pages/login';
 import { RouteObject } from 'react-router';
 
-interface RotuerPathType {
-  layout?: ReactNode;
-  children?: RouteObject[];
-}
-
-const routes = (): Array<RotuerPathType> => [
+export const PUBLIC_PATH: RouteObject[] = [
   {
-    children: [
-      {
-        path: '/',
-        element: <LoginPage />,
-      },
-    ],
+    path: '/',
+    element: <LoginPage />,
+  },
+  {
+    element: <FullLayout />,
+    children: [],
   },
 ];
-export default routes;

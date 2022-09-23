@@ -1,4 +1,10 @@
+import * as Styled from './Style';
+
 const LayoutFooter = () => {
-  return <div></div>;
+  return (
+    <Styled.Wrapper>
+      <span>Copyright</span> © December and Company <span>Inc</span>.
+    </Styled.Wrapper>
+  );
 };
 export default LayoutFooter;

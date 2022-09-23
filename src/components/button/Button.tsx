@@ -1,29 +1,13 @@
-import { ButtonStyle } from './type';
 import { FC } from 'react';
-import styled from 'styled-components';
+import { ButtonStyleProps } from 'libs/types/style/stylePros.type';
+import * as Styled from './Style';
 
-const Button: FC<ButtonStyle> = ({ children, color, width, height, onClick, type, fontSize }) => {
+const Button: FC<ButtonStyleProps> = ({ variant, shape, size, children, ...rest }) => {
   return (
-    <CommonButton
-      onClick={onClick}
-      color={color}
-      width={width}
-      height={height}
-      type={type}
-      fontSize={fontSize}
-    >
+    <Styled.Button variant={variant} shape={shape} size={size} {...rest}>
       {children}
-    </CommonButton>
+    </Styled.Button>
   );
 };
 
 export default Button;
-
-const CommonButton = styled.button<ButtonStyle>`
-  width: ${(props) => props.width};
-  height: ${(props) => props.height};
-  font-size: ${(props) => props.fontSize};
-  background: ${(props) => (props.color === 'main' ? '#091E3B' : '#FFFFFF')};
-  color: ${(props) => (props.color === 'main' ? '#FFFFFF' : '#091E38')};
-  padding: 6px 0;
-`;

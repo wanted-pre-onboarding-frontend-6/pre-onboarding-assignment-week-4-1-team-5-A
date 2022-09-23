@@ -1,7 +1,8 @@
+import LayoutFooter from 'components/Layout/footer/Footer';
+import LayoutHeader from 'components/Layout/header/Header';
+import LayoutSidebar from 'components/Layout/sidebar/Sidebar';
 import { Outlet } from 'react-router-dom';
-import LayoutFooter from './footer/Footer';
-import LayoutHeader from './header/Header';
-import LayoutSidebar from './sidebar/Sidebar';
+
 import * as Styled from './Style';
 
 const FullLayout = () => {

@@ -7,33 +7,39 @@ export const Wrapper = styled.div`
 
   & > div:last-child {
     margin-top: 64px;
+
+    & > p:hover {
+      color: #fff;
+    }
   }
 `;
 
 export const Menu = styled.div<SideMeunStyleProps>`
   width: 100%;
   margin: 16px 0;
-  font-size: ${({ theme }) => theme.fontSize.xxLarge};
+  font-size: ${({ theme }) => theme.fontSize.xLarge};
 
   & > p {
     font-weight: ${({ state }) => state && 'bold'};
     color: ${({ state, theme }) => (state ? '#fff' : theme.palette.fontSubColor)};
     padding: 8px 64px;
+    cursor: pointer;
   }
 
   & > ul {
     height: 0px;
     overflow: hidden;
-    transition: all 1s ease-in-out;
+    transition: all 0.5s ease-in-out;
     ${({ state }) => state && 'height: 64px;'}
   }
 `;
 
 export const List = styled.li<SideMeunStyleProps>`
   width: 100%;
-  padding: 16px 0 16px 196px;
+  padding: 16px 0 16px 146px;
   background-color: ${({ state }) => state && 'rgba(217, 217, 217, 0.1)'};
   font-size: ${({ theme }) => theme.fontSize.xLarge};
   font-weight: ${({ state }) => state && 'bold'};
   color: ${({ state, theme }) => (state ? '#fff' : theme.palette.fontSubColor)};
+  cursor: pointer;
 `;

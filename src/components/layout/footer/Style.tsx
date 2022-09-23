@@ -1,6 +1,22 @@
+import { flexCenter } from 'libs/styles/common';
 import styled from 'styled-components';
 
 export const Wrapper = styled.div`
-  width: 500px;
-  background-color: ${({ theme }) => theme.palette.mainColor};
+  ${flexCenter};
+  position: absolute;
+  bottom: 0;
+  width: calc(100% - 380px);
+  height: 100px;
+  background-color: ${({ theme }) => theme.palette.subColor};
+  font-size: ${({ theme }) => theme.fontSize.xLarge};
+  font-weight: ${({ theme }) => theme.fontWeight.bold};
+  color: ${({ theme }) => theme.palette.fontSubColor};
+
+  & > span:first-child {
+    color: ${({ theme }) => theme.palette.mainColor};
+  }
+  & > span:last-child {
+    margin-left: 8px;
+    font-size: ${({ theme }) => theme.fontSize.large};
+  }
 `;

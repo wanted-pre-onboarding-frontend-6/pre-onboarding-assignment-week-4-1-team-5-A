@@ -1,4 +1,5 @@
 import Http from 'apis/coreApi';
+import TokenService from 'services/TokenService';
 
 interface ParamsType {
   params?: string | object;
@@ -9,9 +10,11 @@ interface ParamsType {
 class AccountApi {
   http: any;
   path: string;
+  token: any;
 
   constructor() {
-    this.http = new Http(process.env.REACT_APP_API_URL);
+    this.token = TokenService.getToken(process.env.REACT_APP_TOKEN_KEY as string);
+    this.http = new Http(process.env.REACT_APP_API_URL, this.token ? this.token : undefined);
     this.path = '/account';
   }
 

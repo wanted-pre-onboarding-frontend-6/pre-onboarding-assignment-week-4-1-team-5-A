@@ -1,8 +1,10 @@
 import { ACCOUNT_TITLE, USER_TITLE } from 'libs/consts/table';
-import styled from 'styled-components';
-import { TableType } from './type';
 
-function Thead({ type }: TableType) {
+export interface TableType {
+  type: 'account' | 'user';
+}
+
+const Thead = ({ type }: TableType) => {
   return (
     <thead>
       <tr>
@@ -22,5 +24,5 @@ function Thead({ type }: TableType) {
       </tr>
     </thead>
   );
-}
+};
 export default Thead;
