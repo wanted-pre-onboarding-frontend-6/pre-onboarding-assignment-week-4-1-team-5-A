@@ -1,4 +1,5 @@
 export interface UserList {
+  setting: any;
   id: number;
   uuid: string;
   photo: string;

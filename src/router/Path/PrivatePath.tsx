@@ -1,10 +1,10 @@
 import AccountListPage from 'pages/accountList';
 import AccountInfoPage from 'pages/accountInfo';
-import UserInfoPage from 'pages/userInfo';
 import UserListPage from 'pages/userList';
 import { RouteObject } from 'react-router';
 import PrivateRoute from 'router/PrivateRoute';
 import FullLayout from 'container/FullLayout/FullLayout';
+import UserInfoPage from 'pages/userInfo';
 
 export const PRIVATE_PATH: RouteObject[] = [
   {

@@ -3,6 +3,7 @@ import TokenService from 'services/TokenService';
 
 interface ParamsType {
   params?: string | object;
+  paramsSerializer?: any;
   data?: any;
   userId?: number | undefined;
 }
@@ -16,7 +17,11 @@ class AccountApi {
     this.path = '/accounts';
   }
 
-  public getList({ params }: ParamsType) {
+  public getList({ params, paramsSerializer }: ParamsType) {
+    if (paramsSerializer) {
+      return this.http.get(`${this.path}?${paramsSerializer}`, params);
+    }
+
     return this.http.get(this.path, params);
   }
 

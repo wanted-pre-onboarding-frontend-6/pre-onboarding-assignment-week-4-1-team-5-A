@@ -3,6 +3,7 @@ import TokenService from 'services/TokenService';
 
 interface ParamsType {
   params?: string | object;
+  paramsSerializer?: any;
   data?: any;
   userId?: number | undefined;
   id?: number;
@@ -23,7 +24,10 @@ class UserApi {
     return this.http.post(this.path, data);
   }
 
-  public getList({ params }: ParamsType) {
+  public getList({ params, paramsSerializer }: ParamsType) {
+    if (paramsSerializer) {
+      return this.http.get(`${this.path}?${paramsSerializer}`, params);
+    }
     return this.http.get(this.path, params);
   }
 
@@ -39,8 +43,9 @@ class UserApi {
     return this.http.post('/login', data);
   }
 
-  public getUserSetting(uuid: string) {
-    return this.http.get(`/userSetting/?uuid=${uuid}`);
+  public getUserSetting({ params }: ParamsType) {
+    console.log(params);
+    return this.http.get('/userSetting', params);
   }
 
   public deleteUser(id: number) {

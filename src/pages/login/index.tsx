@@ -1,6 +1,6 @@
 import * as Styled from './Style';
-import LoginHeader from './components/header/Header';
 import LoginForm from './components/Form/Form';
+import LoginHeader from './components/Header/Header';
 
 const LoginPage = () => {
   return (
