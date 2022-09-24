@@ -3,6 +3,7 @@ import userApi from 'apis/user/userApi';
 import useUpdateUser from 'queries/user/useUpdateUser';
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import styled from 'styled-components';
 import { UserList, UserSetting } from 'types/user';
 import useDeleteUser from '../../../queries/user/useDeleteUser';
 
@@ -57,12 +58,12 @@ function TBody({ user }: { user: UserList }) {
 
   return (
     <tr>
-      <td>
+      <Td>
         <button type="button" onClick={() => userApi.deleteUser(user.id)}>
           X
         </button>
-      </td>
-      <td>
+      </Td>
+      <Td>
         {isEditMode ? (
           <>
             <input value={newName} onChange={(e) => setNewName(e.target.value)} />
@@ -76,19 +77,23 @@ function TBody({ user }: { user: UserList }) {
             </button>
           </div>
         )}
-      </td>
-      <td>{userAccount}</td>
-      <td>{user.email}</td>
-      <td>{userGenderHandler(user.gender_origin)}</td>
-      <td>{user.birth_date}</td>
-      <td>{user.phone_number}</td>
-      <td>{user.last_login}</td>
-      <td>{userSetting?.allow_marketing_push.toString()}</td>
-      <td>{userSetting?.is_staff.toString()}</td>
-      <td>{userSetting?.is_active.toString()}</td>
-      <td>{user.created_at}</td>
+      </Td>
+      <Td>{userAccount}</Td>
+      <Td>{user.email}</Td>
+      <Td>{userGenderHandler(user.gender_origin)}</Td>
+      <Td>{user.birth_date}</Td>
+      <Td>{user.phone_number}</Td>
+      <Td>{user.last_login}</Td>
+      <Td>{userSetting?.allow_marketing_push.toString()}</Td>
+      <Td>{userSetting?.is_staff.toString()}</Td>
+      <Td>{userSetting?.is_active.toString()}</Td>
+      <Td>{user.created_at}</Td>
     </tr>
   );
 }
 
 export default TBody;
+
+const Td = styled.td`
+  padding: 10px 0px;
+`;
