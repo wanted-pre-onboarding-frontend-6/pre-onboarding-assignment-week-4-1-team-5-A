@@ -87,16 +87,16 @@ const UserListPage = () => {
         const userListData = res.data;
 
         // userList => userSetting의 data
-        for (const setting of userList) {
+        for (const userinfo of userListData) {
           // userListData => uuid를 통해 불러온 실제 db userList의 data
           // 관계역전 ==> 안시켜도됩니다
           // user => [setting: Setting]
-          const user = userListData.find((user: UserList) => user.uuid === setting.uuid);
-          user.setting = setting;
+          const user = userList.find((user: UserList) => user.uuid === userinfo.uuid);
+          user.user = userinfo;
           user.account = 0;
           // user = { ... userList, setting: userSetting }
           userWidthSetting.push(user); // user와 setting 값이 같이 있는 배열
-          userIdList.push(user.id); // account와 user의 공통점이 uuid가 아니라 id값
+          userIdList.push(user.user.id); // account와 user의 공통점이 uuid가 아니라 id값
         }
 
         // 배열 쿼리화 위해 추가
@@ -109,9 +109,8 @@ const UserListPage = () => {
           .getList({ paramsSerializer: idParam.toString() })
           .then((res: any) => {
             const accountList = res.data;
-
             for (const account of accountList) {
-              const user = userWidthSetting.find((user: UserList) => user.id === account.user_id);
+              const user = userWidthSetting.find((user: any) => user.user.id === account.user_id);
               user.account += 1;
             }
             setUserList(userWidthSetting);
@@ -133,22 +132,28 @@ const UserListPage = () => {
     setTotalPage(Math.ceil(allUserSettingQuery.data?.data.length / limit));
   }, [allUserSettingQuery.data, limit]);
 
+  console.log(userList);
+
   return (
     <>
       <Container>
         <Table>
           <Thead type="user" />
           <tbody>
-            {userList.map((user: UserList) => (
+            {userList.map((user: any) => (
               <tr>
-                <td>{user.id}</td>
-                <td>{user.id}</td>
-                <td>{user.id}</td>
-                <td>{user.id}</td>
-                <td>{user.id}</td>
-                <td>{user.id}</td>
-                <td>{user.id}</td>
-                <td>{user.id}</td>
+                <td>{user.user?.id}</td>
+                <td>{user.user?.id}</td>
+                <td>{user.user?.id}</td>
+                <td>{user.user?.id}</td>
+                <td>{user.user?.id}</td>
+                <td>{user.user?.id}</td>
+                <td>{user.user?.id}</td>
+                <td>{user.user?.id}</td>
+                <td>{user.user?.id}</td>
+                <td>{user.user?.id}</td>
+                <td>{user.user?.id}</td>
+                <td>{user.user?.id}</td>
               </tr>
             ))}
           </tbody>
