@@ -1,6 +1,6 @@
-import LayoutFooter from 'components/Layout/footer/Footer';
-import LayoutHeader from 'components/Layout/header/Header';
-import LayoutSidebar from 'components/Layout/sidebar/Sidebar';
+import LayoutFooter from 'components/layout/footer/Footer';
+import LayoutHeader from 'components/layout/header/Header';
+import LayoutSidebar from 'components/layout/sidebar/Sidebar';
 import { Outlet } from 'react-router-dom';
 
 import * as Styled from './Style';

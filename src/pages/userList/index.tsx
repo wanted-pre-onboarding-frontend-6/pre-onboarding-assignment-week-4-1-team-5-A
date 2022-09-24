@@ -1,60 +1,39 @@
-import { userAtom, userListAtom } from 'atom/user/atom';
 import useListUser from 'queries/user/useListUser';
-import { useEffect } from 'react';
-import { useRecoilState } from 'recoil';
-import { UserList, UserSetting } from 'types/user';
-import useUserSetting from 'queries/user/useUserSetting';
-import ListTable from 'container/ListTable/Table';
-import accountApi from 'apis/account/accountApi';
-import axios from 'axios';
+import { UserList } from 'types/user';
+import Thead from 'components/Table/thead/Thead';
+import TBody from './components/TBody';
+import styled from 'styled-components';
 
 const UserListPage = () => {
-  const { data, isLoading, isError } = useListUser({
+  const { data: listData } = useListUser({
     _page: 1,
     _limit: 10,
     _sort: 'desc',
   });
 
-  // const getAccountCount = async (id: number) => {
-  //   const res = await axios.get(`/?user_id=${id}`);
-  //   const array = res.data;
-  //   const count = array.length;
-  //   res &&
-  //     res.forEach((item: any) => {
-  //       item.name = id;
-  //       item.count = count;
-  //     });
-  // };
-
-  console.log(data);
-
-  const userSetting = data?.data;
-  const [userList, setUserList] = useRecoilState<any>(userListAtom);
-  const [userAll, setUserAll] = useRecoilState<any>(userAtom);
-
-  // const mergeArrayObjects = (userList: UserList[], userSetting: UserSetting[]) => {
-  //   return (
-  //     userSetting &&
-  //     userSetting.map((item, i) => {
-  //       const data = getAccountCount(item.id);
-  //       if (item.uuid === userList[i]?.uuid ===) {
-  //         const newArray = Object.assign({}, item, userList[i]);
-  //         return newArray
-  //       }
-  //     })
-  //   );
-  // };
-
-  // const userAllData = mergeArrayObjects(userList, userSetting);
-
-  // useEffect(() => {
-  //   setUserList(userLists.data?.data);
-  // }, [userLists, setUserAll]);
+  const userList: UserList[] = listData?.data;
 
   return (
-    <div>
-      <ListTable type="user" />
-    </div>
+    <>
+      <Container>
+        <Table>
+          <Thead type="user" />
+          <tbody>
+            {userList && userList.map((detail, key) => <TBody key={key} user={detail} />)}
+          </tbody>
+        </Table>
+      </Container>
+    </>
   );
 };
 export default UserListPage;
+
+const Container = styled.section`
+  display: flex;
+  justify-content: center;
+`;
+
+const Table = styled.table`
+  background: ${({ theme }) => theme.palette.subColor};
+  width: calc(100% - 380px);
+`;

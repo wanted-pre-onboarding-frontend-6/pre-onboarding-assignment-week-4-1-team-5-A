@@ -8,19 +8,9 @@ const Thead = ({ type }: TableType) => {
   return (
     <thead>
       <tr>
-        <>
-          {type === 'user'
-            ? USER_TITLE.map((title, index) => (
-                <span key={index}>
-                  <th>{title}</th>
-                </span>
-              ))
-            : ACCOUNT_TITLE.map((title, index) => (
-                <span key={index}>
-                  <th>{title}</th>
-                </span>
-              ))}
-        </>
+        {type === 'user'
+          ? USER_TITLE.map((title, index) => <th key={index}>{title}</th>)
+          : ACCOUNT_TITLE.map((title, index) => <th key={index}>{title}</th>)}
       </tr>
     </thead>
   );

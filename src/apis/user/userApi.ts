@@ -5,6 +5,8 @@ interface ParamsType {
   params?: string | object;
   data?: any;
   userId?: number | undefined;
+  id?: number;
+  name?: string;
 }
 
 class UserApi {
@@ -22,7 +24,6 @@ class UserApi {
   }
 
   public getList({ params }: ParamsType) {
-    console.log(params);
     return this.http.get(this.path, params);
   }
 
@@ -38,8 +39,18 @@ class UserApi {
     return this.http.post('/login', data);
   }
 
-  public getUserSetting({ params }: ParamsType) {
-    return this.http.get('/userSetting', params);
+  public getUserSetting(uuid: string) {
+    return this.http.get(`/userSetting/?uuid=${uuid}`);
+  }
+
+  public deleteUser(id: number) {
+    return this.http.delete(`/users/${id}`);
+  }
+
+  public updateUser({ id, newName }: { id: number; newName: string }) {
+    return this.http.put(`/users/${id}`, {
+      newName,
+    });
   }
 }
 export default new UserApi(TokenService.getToken(process.env.REACT_APP_TOKEN_KEY as string));

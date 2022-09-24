@@ -27,5 +27,9 @@ class AccountApi {
   public getInfo({ params }: ParamsType) {
     return this.http.get(this.path, params);
   }
+
+  public getCount(userId: number) {
+    return this.http.get(`/accounts/?user_id=${userId}`);
+  }
 }
 export default new AccountApi(TokenService.getToken(process.env.REACT_APP_TOKEN_KEY as string));
