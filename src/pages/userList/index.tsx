@@ -28,12 +28,17 @@ const UserListPage = () => {
 };
 export default UserListPage;
 
-const Container = styled.section`
-  display: flex;
-  justify-content: center;
-`;
-
 const Table = styled.table`
   background: ${({ theme }) => theme.palette.subColor};
   width: calc(100% - 380px);
+  text-align: center;
+  border: 1px solid;
+`;
+
+const Container = styled.section`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  vertical-align: center;
+  height: 80%;
 `;
