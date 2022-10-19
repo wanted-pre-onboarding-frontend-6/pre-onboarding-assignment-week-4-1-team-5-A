@@ -1,177 +1,201 @@
-import useListUser from 'queries/user/useListUser';
-import { UserList } from 'types/user';
-import styled from 'styled-components';
-import useSettingUser from 'queries/user/useSettingUser';
-import { useEffect, useState } from 'react';
-import accountApi from 'apis/account/accountApi';
-import userApi from 'apis/user/userApi';
+import { Dispatch, useEffect, useRef, useState } from 'react';
 import PageNation from 'components/Pagenation/Pagenation';
-import Thead from 'components/Table/thead/Thead';
-import Tbody from 'components/Table/tbody/Tbody';
-import useInput from 'hooks/useInput';
+import ListTable from 'container/ListTable/Table';
+import useGetUserList from 'queries/user/useGetUserList';
+import * as Styled from './Style';
+import UserListFilter from './components/Filter/Filter';
+import Search from 'components/Search/Search';
+import useQueryString from 'hooks/useQureyString';
+import UserAddModal from './components/Modal/Modal';
+import dayjs from 'dayjs';
+import { AccountService, UserService } from 'apis';
+import { Userinfo } from 'types/api/userApi.type';
 
 const UserListPage = () => {
-  const [page, onChagePage, setPage] = useInput(1);
-  const [limit, onChageLimt, setLimit] = useInput(10);
-  const [sort, onChangeSort, setSort] = useInput('createdAt');
-  const [order, onChageOrder, setOrder] = useInput('desc');
-  const [isStaff, onChageStaff, setIsStaff] = useInput(true); // undefined, true, false
-  const [isAtcive, onChagneActive, setIsActive] = useInput(true); // undefined, true, false
+  // qs
+  const qs = useQueryString();
+  const q = qs.get('q');
+  const limit = parseInt(qs.get('limit') as string) || 10;
+  const page = parseInt(qs.get('page') as string) || 1;
+  const sort = qs.get('sort') || 'createdAt';
+  const order = qs.get('order') || 'desc';
+  const is_staff = qs.get('staff') || undefined;
+  const is_active = qs.get('active') || undefined;
 
-  const [pageLimt, setPageLimt] = useState(5);
+  // state
+  const [userList, setUserList] = useState<Userinfo[]>([]);
+
+  // pagenation
+  const pageLimt = useRef(5);
   const [totalPage, setTotalPage] = useState(0);
 
-  const [userUUIDlist, setUserUUIDlist] = useState<any>([]);
-  const [userList, setUserList] = useState<any>([]);
+  // addmodal state
+  const [addUserModal, setAddUserModal] = useState(false);
 
-  const userSettingQurey = useSettingUser({
-    _page: page,
-    _limit: limit,
-    _sort: sort,
-    _order: order,
-    is_staff: isStaff,
-    is_active: isAtcive,
+  // get User List
+  const userListQurey = useGetUserList({
+    params: {
+      _page: page,
+      _limit: limit,
+      _sort: sort,
+      _order: order,
+      q,
+    },
   });
 
-  const allUserSettingQuery = useSettingUser({
-    is_staff: isStaff,
-    is_active: isAtcive,
+  // get ALL User List
+  const allUserListQuerty = useGetUserList({
+    params: {
+      q,
+    },
   });
 
-  // usresetting  성공적으로 불러와졌다면
-  /* 
-  1. userUUIDlist set // usersetting 값의 uuid 배열 ===> userList와의 foreign key
-  2. userList set // userSetting 데이터로 user setting
-  */
   useEffect(() => {
-    if (!userSettingQurey.data?.data) return;
-    const userSettingData = userSettingQurey.data.data;
-    const userUUIDlist = [];
+    if (!userListQurey.data) return;
+    if (userListQurey.data?.data.length === 0) return setUserList([]);
+    const userIdList: number[] = [];
+    const userUUIDList: string[] = [];
+    const userFullList: Userinfo[] = [];
+    const userListResponse = userListQurey.data.data;
 
-    for (const setting of userSettingData) {
-      userUUIDlist.push(setting.uuid);
+    for (const user of userListResponse) {
+      userUUIDList.push(user.uuid);
     }
 
-    setUserList(userSettingQurey.data.data);
-    setUserUUIDlist(userUUIDlist);
-  }, [userSettingQurey.data]);
-
-  // uuid를 바탕으로
-  // user list 불러오는 역할
-  // 배열을 쿼리스트링 화
-
-  useEffect(() => {
-    if (!userUUIDlist) return;
-    if (!userList) return;
-
-    // uuid 쿼리 스트링화를 위한 url 객체
-    const uuidPramse = new URLSearchParams();
-
-    //id 쿼리 스트링화를 위한 url 객체
-    const idParam = new URLSearchParams();
-    // userd와 setting data가 담길 배열
-    const userWidthSetting: any[] = [];
-
-    // user_id의 배열
-    const userIdList: any[] = [];
-
-    // 배열의 쿼리화를 위해 쿼리 객체에 데이터 추가
-    for (const uuid of userUUIDlist) {
-      uuidPramse.append('uuid', uuid);
-    }
-
-    userApi
-      // 데이터의 쿼리화 후 api 전송
-      .getList({ paramsSerializer: uuidPramse.toString() })
-      .then((res: any) => {
-        const userListData = res.data;
-
-        // userList => userSetting의 data
-        for (const userinfo of userListData) {
-          // userListData => uuid를 통해 불러온 실제 db userList의 data
-          // 관계역전 ==> 안시켜도됩니다
-          // user => [setting: Setting]
-          const user = userList.find((user: UserList) => user.uuid === userinfo.uuid);
-          user.user = userinfo;
+    UserService.getUserSetting({ params: { uuid: userUUIDList, is_staff, is_active } })
+      .then(async (res) => {
+        const userSetting = res.data;
+        if (userSetting.length === 0) return setUserList([]);
+        for (const setting of userSetting) {
+          const user = userListResponse.find((user: any) => user.uuid === setting.uuid);
+          user.setting = setting;
           user.account = 0;
-          // user = { ... userList, setting: userSetting }
-          userWidthSetting.push(user); // user와 setting 값이 같이 있는 배열
-          userIdList.push(user.user.id); // account와 user의 공통점이 uuid가 아니라 id값
+          userFullList.push(user);
         }
 
-        // 배열 쿼리화 위해 추가
-        for (const id of userIdList) {
-          idParam.append('user_id', id);
+        for (const user of userFullList) {
+          userIdList.push(user.id);
         }
 
-        // 이하 동문
-        accountApi
-          .getList({ paramsSerializer: idParam.toString() })
-          .then((res: any) => {
-            const accountList = res.data;
-            for (const account of accountList) {
-              const user = userWidthSetting.find((user: any) => user.user.id === account.user_id);
-              user.account += 1;
-            }
-            setUserList(userWidthSetting);
-          })
-          .catch((err: any) => {
-            console.error(err);
-          });
+        const accunt = await AccountService.getAccountList({ params: { user_id: userIdList } });
+        const accountList = accunt.data;
+
+        for (const account of accountList) {
+          const user = userFullList.find((user: Userinfo) => user.id === account.user_id);
+          user!.account += 1;
+        }
+        setUserList(userFullList);
       })
-
-      // 함수화 시켜서 await, promise로 처리 훨씬 더 깔끔한 코드 탄생, 유즈쿼리 화
-      .catch((err: any) => {
+      .catch((err) => {
         console.error(err);
       });
-  }, [userUUIDlist]);
+  }, [userListQurey.data, is_staff, is_active]);
 
-  // 토탈페이지 계산
+  // totalPage
   useEffect(() => {
-    if (!allUserSettingQuery.data?.data) return;
-    setTotalPage(Math.ceil(allUserSettingQuery.data?.data.length / limit));
-  }, [allUserSettingQuery.data, limit]);
+    if (!allUserListQuerty.data?.data) return;
+    setTotalPage(Math.ceil(allUserListQuerty.data?.data.length / limit));
+  }, [allUserListQuerty.data, limit, userList]);
 
-  console.log(userList);
+  // open addModalUser
+  const onOpenAddUserModal = () => {
+    setAddUserModal(true);
+  };
+
+  // close addModalUser
+  const onCloseAddUserModal = () => {
+    setAddUserModal(false);
+  };
+
+  // edit user
+  const onEditUser = async ({
+    editName,
+    userinfo,
+    setEdit,
+  }: {
+    editName: string;
+    userinfo: Userinfo;
+    setEdit: Dispatch<React.SetStateAction<boolean>>;
+  }) => {
+    if (editName === userinfo.name) return setEdit(false);
+    const userId = userinfo.id;
+    const data = {
+      id: userId,
+      name: editName,
+      email: userinfo.email,
+      password: '1234',
+      age: userinfo.age,
+      photo: userinfo.photo,
+      gender_origin: userinfo.gender_origin,
+      uuid: userinfo.uuid,
+      birth_date: userinfo.birth_date,
+      phone_number: userinfo.phone_number,
+      address: userinfo.address,
+      detail_address: userinfo.detail_address,
+      last_login: userinfo.last_login,
+      created_at: userinfo.created_at,
+      updated_at: dayjs().format(),
+    };
+
+    await UserService.updateUser({ data, userId })
+      .then((res) => {
+        const { data } = res;
+        const newUserList = [...userList];
+        const user: Userinfo | undefined = newUserList.find(
+          (user: Userinfo) => user.id === data.id,
+        );
+        if (!user) return;
+        user.name = data.name;
+        setEdit(false);
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  };
+
+  // delete user
+  const onDeleteUser = async ({
+    userId,
+    userSettingId,
+  }: {
+    userId: number | undefined;
+    userSettingId: string | undefined;
+  }) => {
+    if (!confirm('정말 삭제하시겠습니까?')) return;
+    await UserService.deleteUserSetting({ userSettingId }).then(async () => {
+      await UserService.deleteUser({ userId }).then(() => {
+        const newUserList = userList.filter((user: Userinfo) => user.id !== userId);
+        setUserList(newUserList);
+      });
+    });
+  };
 
   return (
     <>
-      <Container>
-        <Table>
-          <Thead type="user" />
-          <tbody>
-            {userList.map((user: any) => (
-              <tr>
-                <td>{user.user?.id}</td>
-                <td>{user.user?.id}</td>
-                <td>{user.user?.id}</td>
-                <td>{user.user?.id}</td>
-                <td>{user.user?.id}</td>
-                <td>{user.user?.id}</td>
-                <td>{user.user?.id}</td>
-                <td>{user.user?.id}</td>
-                <td>{user.user?.id}</td>
-                <td>{user.user?.id}</td>
-                <td>{user.user?.id}</td>
-                <td>{user.user?.id}</td>
-              </tr>
-            ))}
-          </tbody>
-        </Table>
-      </Container>
-      {/*제가 만든 페이지네이션 page => 현재페이지 totalpage , pageLimt 1~5, 1~10, setPage = 페이지 변경 함수*/}
-      <PageNation page={page} totalPage={totalPage} limit={pageLimt} setPage={setPage} />
+      {addUserModal && (
+        <UserAddModal
+          onCloseAddUserModal={onCloseAddUserModal}
+          userList={userList}
+          setUserList={setUserList}
+        />
+      )}
+      <Styled.Wrapeer>
+        <Styled.Header>
+          <Search />
+          <Styled.Filter>
+            <button onClick={onOpenAddUserModal}>신규유저 추가</button>
+            <UserListFilter />
+          </Styled.Filter>
+        </Styled.Header>
+        <ListTable
+          type="user"
+          list={userList}
+          onEditUser={onEditUser}
+          onDeleteUser={onDeleteUser}
+        />
+        <PageNation page={page} totalPage={totalPage} limit={pageLimt.current} />
+      </Styled.Wrapeer>
     </>
   );
 };
 export default UserListPage;
-
-const Container = styled.section`
-  display: flex;
-  justify-content: center;
-`;
-
-const Table = styled.table`
-  background: ${({ theme }) => theme.palette.subColor};
-  width: calc(100% - 380px);
-`;

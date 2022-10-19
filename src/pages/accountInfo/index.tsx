@@ -1,8 +1,13 @@
+import AccountDetail from './componetns/Detail';
+import * as Styled from './Style';
+
 const AccountInfoPage = () => {
   return (
-    <div>
-      <h1>accountinfo Page</h1>
-    </div>
+    <Styled.Wrapper>
+      <Styled.Container>
+        <AccountDetail />
+      </Styled.Container>
+    </Styled.Wrapper>
   );
 };
 export default AccountInfoPage;

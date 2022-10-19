@@ -1,4 +1,4 @@
-import { ButtonStyleProps } from 'libs/types/style/stylePros.type';
+import { ButtonStyleProps } from 'types/style/stylePros.type';
 import styled, { css } from 'styled-components';
 
 const variantCSS = {

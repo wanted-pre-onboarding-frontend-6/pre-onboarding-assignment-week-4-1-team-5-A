@@ -9,6 +9,7 @@ export const BlackBackGround = styled.div`
   left: 0;
   background-color: rgba(0, 0, 0, 0.8);
   position: fixed;
+  z-index: 100;
 `;
 
 // align

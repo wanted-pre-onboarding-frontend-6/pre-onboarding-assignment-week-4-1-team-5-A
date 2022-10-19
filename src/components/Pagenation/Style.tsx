@@ -1,14 +1,15 @@
 import { flexCenter } from 'libs/styles/common';
-import { PagenationStyleProtps } from 'libs/types/style/stylePros.type';
+import { PagenationStyleProtps } from 'types/style/stylePros.type';
 import styled from 'styled-components';
 
 export const Wrapper = styled.div`
   ${flexCenter}
   & button {
-    width: 24px;
-    height: 24px;
+    width: 56px;
+    height: 32px;
     padding: 16px;
     margin: 0 4px;
+    ${flexCenter};
     background-color: ${({ theme }) => theme.palette.subColor};
     color: ${({ theme }) => theme.palette.mainColor};
 

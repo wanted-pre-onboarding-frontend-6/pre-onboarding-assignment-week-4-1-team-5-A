@@ -1,61 +1,44 @@
-import Http from 'apis/coreApi';
-import TokenService from 'services/TokenService';
+import { AxiosResponse } from 'axios';
+import { UserApiImpl, UserApiParamType } from './userImpl';
 
-interface ParamsType {
-  params?: string | object;
-  paramsSerializer?: any;
-  data?: any;
-  userId?: number | undefined;
-  id?: number;
-  name?: string;
-}
+class UserApi implements UserApiImpl {
+  baseHttp: any;
+  private path = '/users';
 
-class UserApi {
-  http: any;
-  path: string;
-  token: string | null | undefined;
-
-  constructor(token: string | null | undefined) {
-    this.http = new Http(process.env.REACT_APP_API_URL, token ? token : undefined);
-    this.path = '/users';
+  constructor(http: any) {
+    this.baseHttp = http;
   }
 
-  public addUser({ data }: ParamsType) {
-    return this.http.post(this.path, data);
+  public addUser({ data }: UserApiParamType): Promise<AxiosResponse<any>> {
+    return this.baseHttp.post(this.path, data);
   }
 
-  public getList({ params, paramsSerializer }: ParamsType) {
-    if (paramsSerializer) {
-      return this.http.get(`${this.path}?${paramsSerializer}`, params);
-    }
-    return this.http.get(this.path, params);
+  public addUserSetting({ data }: UserApiParamType): Promise<AxiosResponse<any>> {
+    return this.baseHttp.post('/userSetting', data);
   }
 
-  public getListALL() {
-    return this.http.get(this.path);
+  public getUserDetail({ userId }: UserApiParamType): Promise<AxiosResponse<any>> {
+    return this.baseHttp.get(`${this.path}/${userId}`);
   }
 
-  public getInfo({ params }: ParamsType) {
-    return this.http.get(this.path, params);
+  public getUserList({ params }: UserApiParamType): Promise<AxiosResponse<any>> {
+    return this.baseHttp.get(this.path, { params });
   }
 
-  public loginUser({ data }: ParamsType) {
-    return this.http.post('/login', data);
+  public getUserSetting({ params }: UserApiParamType): Promise<AxiosResponse<any>> {
+    return this.baseHttp.get('/userSetting', { params });
   }
 
-  public getUserSetting({ params }: ParamsType) {
-    console.log(params);
-    return this.http.get('/userSetting', params);
+  public updateUser({ userId, data }: UserApiParamType): Promise<AxiosResponse<any>> {
+    return this.baseHttp.put(`${this.path}/${userId}`, data);
   }
 
-  public deleteUser(id: number) {
-    return this.http.delete(`/users/${id}`);
+  public deleteUser({ userId }: UserApiParamType): Promise<AxiosResponse<any>> {
+    return this.baseHttp.delete(`${this.path}/${userId}`);
   }
 
-  public updateUser({ id, newName }: { id: number; newName: string }) {
-    return this.http.put(`/users/${id}`, {
-      newName,
-    });
+  public deleteUserSetting({ userSettingId }: UserApiParamType): Promise<AxiosResponse<any>> {
+    return this.baseHttp.delete(`/userSetting/${userSettingId}`);
   }
 }
-export default new UserApi(TokenService.getToken(process.env.REACT_APP_TOKEN_KEY as string));
+export default UserApi;

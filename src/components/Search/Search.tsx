@@ -17,15 +17,17 @@ const Search = () => {
   };
 
   return (
-    <form onSubmit={searchValueHandler}>
+    <Styled.Form onSubmit={searchValueHandler}>
       <Styled.Input
         type="text"
         placeholder="검색어를 입력해주세요"
         value={searchValue}
         onChange={(e) => setSearchValue(e.target.value)}
       />
-      <FontAwesomeIcon icon={['fas', 'search']} />
-    </form>
+      <Styled.Submit>
+        <FontAwesomeIcon icon={['fas', 'search']} />
+      </Styled.Submit>
+    </Styled.Form>
   );
 };
 export default Search;

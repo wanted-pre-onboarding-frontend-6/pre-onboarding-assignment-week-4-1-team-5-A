@@ -1,4 +1,4 @@
-import { SideMeunStyleProps } from 'libs/types/style/stylePros.type';
+import { SideMeunStyleProps } from 'types/style/stylePros.type';
 import styled from 'styled-components';
 
 export const Wrapper = styled.div`
@@ -17,7 +17,7 @@ export const Wrapper = styled.div`
 export const Menu = styled.div<SideMeunStyleProps>`
   width: 100%;
   margin: 16px 0;
-  font-size: ${({ theme }) => theme.fontSize.xLarge};
+  font-size: ${({ theme }) => theme.fontSize.large};
 
   & > p {
     font-weight: ${({ state }) => state && 'bold'};
@@ -38,7 +38,7 @@ export const List = styled.li<SideMeunStyleProps>`
   width: 100%;
   padding: 16px 0 16px 146px;
   background-color: ${({ state }) => state && 'rgba(217, 217, 217, 0.1)'};
-  font-size: ${({ theme }) => theme.fontSize.xLarge};
+  font-size: ${({ theme }) => theme.fontSize.large};
   font-weight: ${({ state }) => state && 'bold'};
   color: ${({ state, theme }) => (state ? '#fff' : theme.palette.fontSubColor)};
   cursor: pointer;

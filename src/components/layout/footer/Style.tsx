@@ -5,7 +5,7 @@ export const Wrapper = styled.div`
   ${flexCenter};
   position: absolute;
   bottom: 0;
-  width: calc(100% - 380px);
+  width: calc(100% - 300px);
   height: 100px;
   background-color: ${({ theme }) => theme.palette.subColor};
   font-size: ${({ theme }) => theme.fontSize.xLarge};

@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import { ButtonStyleProps } from 'libs/types/style/stylePros.type';
+import { ButtonStyleProps } from 'types/style/stylePros.type';
 import * as Styled from './Style';
 
 const Button: FC<ButtonStyleProps> = ({ variant, shape, size, children, ...rest }) => {

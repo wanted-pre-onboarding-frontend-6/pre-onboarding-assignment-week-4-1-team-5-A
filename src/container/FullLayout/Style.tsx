@@ -6,5 +6,5 @@ export const Wrapper = styled.div`
 `;
 
 export const Container = styled.div`
-  width: calc(100% - 380px);
+  width: calc(100% - 300px);
 `;

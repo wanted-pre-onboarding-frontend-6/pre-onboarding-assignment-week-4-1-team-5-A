@@ -1,8 +1,8 @@
 import { useMutation } from '@tanstack/react-query';
-import UserApi from 'apis/user/userApi';
+import { AuthService } from 'apis';
 import useInputs from 'hooks/useInputs';
 import { useNavigate } from 'react-router-dom';
-import TokenService from 'services/TokenService';
+import TokenRepository from 'repository/TokenRepository';
 import * as Styled from './Style';
 
 interface Form {
@@ -17,15 +17,15 @@ const LoginForm = () => {
     password: '',
   });
 
-  const LoginUser = useMutation((data: any) => UserApi.loginUser(data), {
+  const LoginUser = useMutation((data: any) => AuthService.login(data), {
     onSuccess: (response: any) => {
       const { accessToken } = response.data;
-      TokenService.setToken({ key: process.env.REACT_APP_TOKEN_KEY as string, token: accessToken });
-      if (TokenService.getToken(process.env.REACT_APP_TOKEN_KEY as string)) {
+      TokenRepository.setToken(accessToken);
+      if (TokenRepository.getToken()) {
         navigate('/accounts/account-list', { replace: true });
       }
     },
-    onError: () => {
+    onError: (err) => {
       alert('아이디와 비밀번호를 한번 더 확인해주세요');
     },
   });

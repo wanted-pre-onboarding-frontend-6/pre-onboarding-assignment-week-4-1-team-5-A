@@ -1,8 +1,21 @@
 import { useParamString } from 'hooks/useParamString';
-import { SIDE_MENU } from 'libs/consts/sideMenu';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import * as Styled from './Style';
+
+type ListType = {
+  id: number;
+  name: string;
+  keyword: string;
+};
+
+type MenuType = {
+  id: number;
+  name: string;
+  keyword: string;
+  state?: boolean;
+  children?: Array<ListType>;
+};
 
 const SideContent = () => {
   // params
@@ -10,7 +23,23 @@ const SideContent = () => {
   const navige = useNavigate();
 
   // sideList state
-  const [sideList, setSideList] = useState(SIDE_MENU);
+  const [sideList, setSideList] = useState([
+    {
+      id: 1,
+      name: '계좌 관리',
+      keyword: 'accounts',
+      state: false,
+      children: [{ id: 1, name: '계좌 목록', keyword: 'account-list', state: false }],
+    },
+    {
+      id: 2,
+      name: '사용자 관리',
+      keyword: 'users',
+      state: false,
+      children: [{ id: 1, name: '사용자 목록', keyword: 'user-list', state: false }],
+    },
+    { id: 9999, name: '로그아웃', keyword: 'logout' },
+  ]);
 
   // refresh selec sideList
   useEffect(() => {
@@ -18,13 +47,13 @@ const SideContent = () => {
     if (!MENU_PATH) {
       return;
     }
-    const menueSelect = menuList.find((menu: any) => menu.keyword === MENU_PATH);
+    const menueSelect = menuList.find((menu: MenuType) => menu.keyword === MENU_PATH);
     menueSelect!.state = true;
 
     if (!LIST_PATH) {
       return setSideList(menuList);
     }
-    const listSelect = menueSelect?.children!.find((list: any) => list.keyword === LIST_PATH);
+    const listSelect = menueSelect?.children!.find((list: ListType) => list.keyword === LIST_PATH);
     listSelect!.state = true;
     setSideList(menuList);
   }, [MENU_PATH, LIST_PATH]);
@@ -32,7 +61,7 @@ const SideContent = () => {
   // onclick menu
   const onClickMenu = (id: number) => {
     const menuList = [...sideList];
-    const menueSelect = menuList.find((menu: any) => menu.id === id);
+    const menueSelect = menuList.find((menu: MenuType) => menu.id === id);
     menueSelect!.state = !menueSelect!.state;
     setSideList(menuList);
   };
@@ -63,19 +92,15 @@ const SideContent = () => {
             <p onClick={() => onClickMenu(menu.id)}>{menu.name}</p>
             {menu.children &&
               menu.children.map((list) => (
-                <ul>
-                  <Styled.List
-                    key={list.id}
-                    state={list.state}
-                    onClick={() => onClickList(list.keyword)}
-                  >
+                <ul key={list.id}>
+                  <Styled.List state={list.state} onClick={() => onClickList(list.keyword)}>
                     {list.name}
                   </Styled.List>
                 </ul>
               ))}
           </Styled.Menu>
         ) : (
-          <Styled.Menu>
+          <Styled.Menu key={menu.id}>
             <p>로그아웃</p>
           </Styled.Menu>
         );

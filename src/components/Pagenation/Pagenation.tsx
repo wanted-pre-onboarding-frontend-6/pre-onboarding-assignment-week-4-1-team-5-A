@@ -1,4 +1,6 @@
+import useQueryString from 'hooks/useQureyString';
 import { FC, useEffect, useMemo, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import * as Styled from './Style';
 
 type Page = {
@@ -17,16 +19,18 @@ interface PageNationProps {
   page: number;
   totalPage: number;
   limit: number;
-  setPage?: (page: number) => void;
 }
 
-const PageNation: FC<PageNationProps> = ({ page, totalPage, limit, setPage }) => {
+const PageNation: FC<PageNationProps> = ({ page, totalPage, limit }) => {
+  const qs = useQueryString();
+
   // page State
   const [pageList, setPageList] = useState<PageNationType[]>([]);
   const LIMIT_PAGE: number = limit;
   const totalIndex = useMemo(() => Math.ceil(totalPage / LIMIT_PAGE), [totalPage]);
   const [currentIndex, setCurrentIndex] = useState<number>(0);
 
+  const navigate = useNavigate();
   // page qurey setIndex
   useEffect(() => {
     if (!page) return;
@@ -40,6 +44,7 @@ const PageNation: FC<PageNationProps> = ({ page, totalPage, limit, setPage }) =>
   // page List
   useEffect(() => {
     setPageList([]);
+    setCurrentIndex(0);
     for (let i = 0; i < totalIndex; i++) {
       setPageList((prev) => [
         ...prev,
@@ -58,7 +63,7 @@ const PageNation: FC<PageNationProps> = ({ page, totalPage, limit, setPage }) =>
         },
       ]);
     }
-  }, [totalIndex, LIMIT_PAGE]);
+  }, [totalPage]);
 
   // page active
   useEffect(() => {
@@ -74,25 +79,23 @@ const PageNation: FC<PageNationProps> = ({ page, totalPage, limit, setPage }) =>
 
   // page click
   const onClickPage = (page: number) => {
-    if (setPage) {
-      setPage(page);
-    }
+    qs.set('page', String(page));
+    navigate(`?${qs.toString()}`);
   };
 
   // onClickPrev
   const onClickPrev = () => {
     if (currentIndex === 0) return;
-    if (!setPage) return;
-    setPage((currentIndex - 1) * LIMIT_PAGE + 1);
+    qs.set('page', String(pageList[currentIndex - 1].startPage));
+    navigate(`?${qs.toString()}`);
     setCurrentIndex(currentIndex - 1);
   };
 
   // onCLickNextPage
   const onClickNext = () => {
     if (currentIndex === totalIndex - 1) return;
-    if (!setPage) return;
-
-    setPage((currentIndex + 1) * LIMIT_PAGE + 1);
+    qs.set('page', String(pageList[currentIndex + 1].startPage));
+    navigate(`?${qs.toString()}`);
     setCurrentIndex(currentIndex + 1);
   };
 
@@ -100,14 +103,15 @@ const PageNation: FC<PageNationProps> = ({ page, totalPage, limit, setPage }) =>
     <Styled.Wrapper>
       <button
         onClick={() => {
-          setPage && setPage(1);
+          qs.set('page', '1');
+          navigate(`?${qs.toString()}`);
           setCurrentIndex(0);
         }}
       >
-        start
+        &lt; &lt;
       </button>
       <button disabled={currentIndex === 0} onClick={onClickPrev}>
-        prev
+        &lt;
       </button>
       {pageList.length > 0 &&
         pageList[currentIndex].page.map((list) => {
@@ -123,15 +127,16 @@ const PageNation: FC<PageNationProps> = ({ page, totalPage, limit, setPage }) =>
             );
         })}
       <button disabled={currentIndex === totalIndex - 1} onClick={onClickNext}>
-        next
+        &gt;
       </button>
       <button
         onClick={() => {
-          setPage && setPage(totalPage);
+          qs.set('page', String(totalPage));
+          navigate(`?${qs.toString()}`);
           setCurrentIndex(totalIndex - 1);
         }}
       >
-        last
+        &gt; &gt;
       </button>
     </Styled.Wrapper>
   );

@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
 import * as Styled from './Style';
 
-interface AlertProps {
+export interface AlertProps {
   variant: 'alert' | 'confirm';
   title: string;
   children: React.ReactNode;
