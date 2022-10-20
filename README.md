@@ -12,7 +12,7 @@
 
 ## 📌 배포
 
-http://seongyong123.s3-website.ap-northeast-2.amazonaws.com/
+http://d12r37ezbodeiz.cloudfront.net
 
 `test id: test@test.com`
 
