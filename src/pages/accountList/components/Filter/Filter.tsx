@@ -34,7 +34,7 @@ const AccontListFilter = () => {
           <Styled.Option value="false">비활성화</Styled.Option>
         </Styled.Select>
         <Styled.Select name="sort" onChange={onCnageSelect}>
-          <Styled.Option value="createdAt">계좌상태</Styled.Option>
+          <Styled.Option value="createdAt">최신순</Styled.Option>
           <Styled.Option value="name">이름순</Styled.Option>
           <Styled.Option value="last_login">로그인순</Styled.Option>
         </Styled.Select>

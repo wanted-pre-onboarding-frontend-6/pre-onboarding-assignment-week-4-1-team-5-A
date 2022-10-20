@@ -17,6 +17,8 @@ const AccountListPage = () => {
   const limit = parseInt(qs.get('limit') as string) || 10;
   const page = parseInt(qs.get('page') as string) || 1;
   const sort = qs.get('sort') || 'createdAt';
+  const broker_id = qs.get('broker_id') || undefined;
+  const active = qs.get('active') || undefined;
   const order = qs.get('order') || 'desc';
 
   const [accountList, setAccountList] = useState<AcouuntInfo[]>([]);
@@ -30,12 +32,16 @@ const AccountListPage = () => {
       _sort: sort,
       _order: order,
       q,
+      broker_id,
+      is_active: active,
     },
   });
 
   const allAccountListQuery = useAccountList({
     params: {
       q,
+      broker_id,
+      active,
     },
   });
 
