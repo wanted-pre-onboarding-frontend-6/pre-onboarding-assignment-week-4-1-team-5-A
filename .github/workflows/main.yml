@@ -18,7 +18,7 @@ jobs:
     - name: deploy to s3 bucket
       uses: jakejarvis/s3-sync-action@main
       with:
-        args: --delete --- 기존에 있던 파일 지우기
+        args: --delete ---
       env:
         AWS_S3_BUCKET: ${{ secrets.AWS_S3_BUCKET }} 
         AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
