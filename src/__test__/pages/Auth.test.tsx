@@ -51,17 +51,20 @@ describe('로그인 후 페이지 이동', () => {
     userEvent.type($passwordInput, 'test');
     userEvent.click($loginButton);
 
-    await waitFor(async () => {
-      await AuthService.login({ data: { email: 'test@test.com', password: 'test' } }).then(
-        (res) => {
-          const { accessToken } = res.data;
-          TokenRepository.setToken(accessToken);
-          if (TokenRepository.getToken()) {
-            navigate('/accounts/account-list');
-            expect(window.location.pathname).toEqual('/accounts/account-list');
-          }
-        },
-      );
-    });
+    await waitFor(
+      async () => {
+        await AuthService.login({ data: { email: 'test@test.com', password: 'test' } }).then(
+          (res) => {
+            const { accessToken } = res.data;
+            TokenRepository.setToken(accessToken);
+            if (TokenRepository.getToken()) {
+              navigate('/accounts/account-list');
+              expect(window.location.pathname).toEqual('/accounts/account-list');
+            }
+          },
+        );
+      },
+      { timeout: 8000 },
+    );
   });
 });
