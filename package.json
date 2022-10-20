@@ -37,7 +37,8 @@
     "lint:fix": "eslint --fix --cache \"src/**/*.{ts,tsx}\"",
     "format": "prettier --write --cache \"src/**/*.{ts,tsx}\"",
     "storybook": "start-storybook -p 6006 -s public",
-    "build-storybook": "build-storybook -s public"
+    "build-storybook": "build-storybook -s public",
+    "deploy": "aws s3 sync ./build s3://seongyong123 --profile=seongyong"
   },
   "eslintConfig": {
     "extends": [
